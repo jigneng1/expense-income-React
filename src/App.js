@@ -5,8 +5,7 @@ import { useState } from 'react';
 
 
 function App() {
-    const initData=[];
-    const[items , setItems] = useState(initData);
+    const[items , setItems] = useState([]);
     const onAddNewItem =(newItem) =>{
         setItems((prevItem)=>{
             return [newItem,...prevItem]

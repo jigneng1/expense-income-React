@@ -1,6 +1,9 @@
+import './Item.css'
 function Item({title,amount}) {
+    const status = amount<0 ? "expenses":"income";
+    const symbol = amount<0 ? "-" : "+";
     return(
-            <li>{title}<span>{amount}</span></li>
+            <li className={status}>{title}<span>{symbol}{Math.abs(amount)}</span></li>
     );
 }
 

@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './FromComponents.css'
 function FormComponent(props) {
-
     //สร้าง state ข้างในเป็น function
     const [title,setTitle] = useState("");
-    const [amount,setAmount] = useState("");
+    const [amount,setAmount] = useState(0);
     const inputTitle  =(event) =>{
         setTitle(event.target.value);
     }
@@ -21,8 +20,14 @@ function FormComponent(props) {
         //set default
         props.onAddItem(itemData);//bottom-up
         setTitle('');
-        setAmount('');
+        setAmount(0);
     }
+    const [formValid,setformValid] = useState(false);
+    useEffect(()=>{
+        const checkData = title.trim().length>0 && amount !==0 ; //boolean
+        setformValid(checkData);
+       
+    },[title,amount]);
     return(
         <form onSubmit={saveItem}> 
         <div className="form-control">
@@ -31,10 +36,10 @@ function FormComponent(props) {
         </div>
         <div className="form-control">
             <label>จำนวนเงิน</label>
-            <input type="text" placeholder="(+รายรับ , -รายจ่าย )" onChange={inputAmount} value={amount}/>
+            <input type="number" placeholder="(+รายรับ , -รายจ่าย )" onChange={inputAmount} value={amount}/>
         </div>
         <div>
-            <button type="submit" className='btn'>เพิ่มข้อมูล</button>
+            <button type="submit" className='btn' disabled={!formValid}>เพิ่มข้อมูล</button>
         </div>
     </form>
     );
